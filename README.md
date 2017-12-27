@@ -64,4 +64,35 @@ contract Storage {
         _;
     }
 }
+
+/**
+ * @title Basic token
+ * @dev Basic version of StandardToken
+ */
+contract Logic {
+    address public owner;
+    
+    address public lib;
+    
+    function Load(address _lib) only_owner
+    {
+        lib = _lib;
+    }
+
+    function Logic()
+    {
+        owner = msg.sender;
+    }
+    
+    function() payable
+    {
+        lib.delegatecall(msg.data);
+    }
+    
+    modifier only_owner
+    {
+        assert(msg.sender == owner);
+        _;
+    }
+}
 ```
